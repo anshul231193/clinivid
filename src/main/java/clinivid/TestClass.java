@@ -11,12 +11,26 @@ public class TestClass {
 	static LinkedHashMap<String,Object> jsonMap = new LinkedHashMap<String,Object>();
 
     public static LinkedHashMap<String,Object> process(String name){
-        Pattern ptn = Pattern.compile("<*>");
-        String[] str = ptn.split(name);
+//        Pattern ptn = Pattern.compile("<*>");
+//        String[] str = ptn.split(name);
+//        System.out.println(str.length);
+    	String[] str = {"","",""};
         LinkedHashMap<String,Object> hm = new LinkedHashMap<String,Object>();
-        hm.put("first",str[0].replaceAll("<",""));
-        hm.put("middle",str[1].replaceAll("<",""));
-        hm.put("last",str[2].replaceAll("<",""));
+        int k=0;
+        for(int i=0;i<name.length();i++){
+        	if(name.charAt(i)=='<'){
+        		i++;
+        		while(i<name.length() && name.charAt(i)!='>'){
+        			str[k] += name.charAt(i)+"";
+        			i++;
+        		}
+        	}
+        	System.out.println(str[k]);
+        	k++;
+        }
+        hm.put("first",str[0]);
+        hm.put("middle",str[1]);
+        hm.put("last",str[2]);
         System.out.println(hm);
         return hm;
     }
@@ -27,6 +41,7 @@ public class TestClass {
         for(int i=0;i<loc.length;i++){
             Pattern ptn = Pattern.compile("<*>");
             String[] str = ptn.split(loc[i]);
+            System.out.println(str.length);
             LinkedHashMap<String,Object> lhm = new LinkedHashMap<String,Object>();
             lhm.put("name",str[0].replaceAll("<",""));
             LinkedHashMap<String,Object> coord = new LinkedHashMap<String,Object>();
