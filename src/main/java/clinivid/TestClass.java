@@ -25,13 +25,11 @@ public class TestClass {
         			i++;
         		}
         	}
-        	System.out.println(str[k]);
         	k++;
         }
         hm.put("first",str[0]);
         hm.put("middle",str[1]);
         hm.put("last",str[2]);
-        System.out.println(hm);
         return hm;
     }
     
@@ -39,16 +37,27 @@ public class TestClass {
         ArrayList<Object> result = new ArrayList<Object>();
         String[] loc = location.split(",");
         for(int i=0;i<loc.length;i++){
-            Pattern ptn = Pattern.compile("<*>");
-            String[] str = ptn.split(loc[i]);
-            System.out.println(str.length);
+//            Pattern ptn = Pattern.compile("<*>");
+//            String[] str = ptn.split(loc[i]);
+//            System.out.println(str.length);
+        	String[] str = {"","","",""};
+        	int k=0;
+            for(int j=0;j<loc[i].length();j++){
+            	if(loc[i].charAt(j)=='<'){
+            		j++;
+            		while(j<loc[i].length() && loc[i].charAt(j)!='>'){
+            			str[k] += loc[i].charAt(j)+"";
+            			j++;
+            		}
+            	}
+            	k++;
+            }
             LinkedHashMap<String,Object> lhm = new LinkedHashMap<String,Object>();
             lhm.put("name",str[0].replaceAll("<",""));
             LinkedHashMap<String,Object> coord = new LinkedHashMap<String,Object>();
             coord.put("long",str[1].replaceAll("<",""));
             coord.put("lat",str[2].replaceAll("<",""));
             lhm.put("coords",coord);
-            System.out.println(lhm);
             result.add(lhm);
         }
         return result;
